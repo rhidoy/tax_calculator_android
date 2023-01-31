@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tax Calculator</string>
+
+    <string-array name="payer_type">
+        <item>General</item>
+        <item>Female/Senior Citizen</item>
+        <item>Disabled</item>
+        <item>Gazetted Freedom Fighters</item>
+    </string-array>
+
+    <string-array name="zone">
+        <item>Dhaka/Chittagong City</item>
+        <item>Other City</item>
+        <item>Rest Of The Country</item>
+    </string-array>
+</resources>
