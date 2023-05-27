@@ -8,6 +8,12 @@ public class IncomeData {
     private final int maxYearlyConveyanceLimit = 30000;
     private final int maxYearlyInvestmentLimit = 10000000; //1 koti
 
+    private final double eligibleInvestmentPercent = .20;
+
+    private final double generalTaxReducePercent = .15; //15%
+//    private final int taxReduceMinIncome = 1500000; //15lakh
+//    private final double minTaxReducePercent = .1; //10%
+
     private int payerType = 0;
     private int zone = 0;
 
@@ -31,6 +37,11 @@ public class IncomeData {
     private double haveToPayTax;
     private double payableTax;
     private final TaxCalculateListener listener;
+    private boolean monthlySalary = true;
+
+    private int totalPayableIncome = 0;
+
+    private StringBuilder taxCalculation = new StringBuilder();
 
     public IncomeData(TaxCalculateListener listener) {
         this.listener = listener;
@@ -69,7 +80,10 @@ public class IncomeData {
     }
 
     public int getSalary() {
-        return salary / 12;
+        if (monthlySalary)
+            return salary / 12;
+
+        return salary;
     }
 
     public int getSalaryTotal() {
@@ -78,7 +92,9 @@ public class IncomeData {
 
     public void setSalary(int salary) {
         if (getSalary() != salary) {
-            this.salary = salary * 12;
+            if (monthlySalary)
+                salary = salary * 12;
+            this.salary = salary;
             calculateTax();
         }
     }
@@ -208,19 +224,23 @@ public class IncomeData {
         this.haveToPayTax = haveToPayTax;
     }
 
-    public boolean isPercenMatch() {
+    public boolean isPercentMatch() {
         return basicPercent + houseRentPercent + medicalPercent + conveyancePercent == 100;
     }
 
     private void resetValue() {
-        salary = 55000 * 12;
+        salary = 55000;
+        if (monthlySalary)
+            salary = salary * 12;
         incentive = 0;
         bonus = 0;
         investedAmount = 0;
+        totalPayableIncome = 0;
         updateValue();
     }
 
     private void updateValue() {
+        taxCalculation = new StringBuilder();
         basic = (int) (salary * ((double) getBasicPercent() / 100));
         houseRent = (int) (salary * ((double) getHouseRentPercent() / 100));
         medical = (int) (salary * ((double) getMedicalPercent() / 100));
@@ -229,9 +249,12 @@ public class IncomeData {
         setTotalAmount(salary + incentive + bonus);
     }
 
+    private double totalTax;
+    private int taxFreeMaxIncome;
+
     public void calculateTax() {
 
-        if (isPercenMatch()) {
+        if (isPercentMatch()) {
             payableTax = 0;
             updateValue();
             //first find tax free house rent
@@ -263,12 +286,10 @@ public class IncomeData {
 
 
             //calculate taxable amount
-            int totalPayableIncome = getBasicTotal() + payableRent
-                    + payableMedical + payableConveyance + bonus;
+            totalPayableIncome = getBasicTotal() + payableRent
+                    + payableMedical + payableConveyance + bonus + incentive;
 
-            eligibleInvestment = (int) (totalPayableIncome * .25);
-
-            int taxFreeMaxIncome = 300000; //general
+            taxFreeMaxIncome = 300000; //general
             if (payerType == 1)
                 taxFreeMaxIncome = 350000; //Female/Senior Citizen
             else if (payerType == 2)
@@ -276,21 +297,29 @@ public class IncomeData {
             else if (payerType == 3)
                 taxFreeMaxIncome = 450000; //Gazetted Freedom Fighters
 
-            if (totalPayableIncome > taxFreeMaxIncome)
-                payableTax = calculateTax(totalPayableIncome, taxFreeMaxIncome, 0);
+            totalTax = 0;
+            if (totalPayableIncome > taxFreeMaxIncome) {
+                calculateTax(totalPayableIncome, 0);
+            }
 
             //now calculate investment tax
+            eligibleInvestment = (int) (totalPayableIncome * eligibleInvestmentPercent);
             int taxFreeInvestment = Math.min(getInvestedAmount(), getEligibleInvestment());
             taxFreeInvestment = Math.min(taxFreeInvestment, maxYearlyInvestmentLimit);
 
-            double taxReducePercent = .15;
-            if (totalPayableIncome > 1500000) {
-                taxReducePercent = .1; //10%
-            }
-            payableTax = payableTax - (taxFreeInvestment * taxReducePercent);
+
+            taxCalculation.append("\n\nYour Total Tax:\t\t")
+                    .append(totalTax);
+
+            taxCalculation.append("\nYour Investment Rebate:\t")
+                    .append(taxFreeInvestment * generalTaxReducePercent)
+                    .append(" \tPercent ")
+                    .append(generalTaxReducePercent);
+
+            payableTax = totalTax - (taxFreeInvestment * generalTaxReducePercent);
 
 
-            if (payableTax < 5000) {
+            if (totalTax > 0 && payableTax < 5000) {
                 if (getZone() == 0)
                     setHaveToPayTax(5000);
                 else if (getZone() == 1)
@@ -302,72 +331,66 @@ public class IncomeData {
         listener.onCalculate(this);
     }
 
-    private double calculateTax(int income, int limit, int slab) {
-        if (income > limit)
-            income = income - limit;
-
+    private void calculateTax(int income, int slab) {
         double taxPercent;
-
+        int limit;
         switch (slab) {
+            case 5:
+                taxPercent = 0.25;
+                limit = income;
+                break;
             case 4:
-                return income * 0.25;
-            case 3:
                 taxPercent = 0.20;
                 limit = 500000;
                 break;
-            case 2:
+            case 3:
                 taxPercent = 0.15;
                 limit = 400000;
                 break;
-            case 1:
+            case 2:
                 taxPercent = 0.10;
                 limit = 300000;
                 break;
-            default:
+            case 1:
                 taxPercent = 0.05;
                 limit = 100000;
-
+                break;
+            default:
+                taxPercent = 0;
+                limit = taxFreeMaxIncome;
         }
 
         if (income > limit) {
-            return limit * taxPercent + calculateTax(income, limit, slab + 1);
+            setTaxCalculation(limit, taxPercent);
+            calculateTax(income - limit, slab + 1);
         } else {
-            return income * taxPercent;  //zero tax
+            setTaxCalculation(income, taxPercent);
         }
+    }
 
+    public boolean isMonthlySalary() {
+        return monthlySalary;
+    }
 
-//        switch (slab) {
-//            case 5:
-//                taxPercent = 0.25;
-//                return income * .25;  //rest money 25%
-//            case 4:
-//                taxPercent = 0.20;
-//                newLimit = 0;
-//                if (income > limit)
-//                    return calculateTax(unCalculateIncome, 0, 5);
-//                else return income * .20;  //next 5 lakh 20%
-//            case 3:
-//                taxPercent = 0.15;
-//                newLimit = 500000;
-//                if (income > limit)
-//                    return calculateTax(unCalculateIncome, 500000, 4);
-//                else return income * .15;  //next 4 lakh 15%
-//            case 2:
-//                taxPercent = 0.10;
-//                newLimit = 400000;
-//                if (income > limit)
-//                    return calculateTax(unCalculateIncome, 400000, 3);
-//                else return income * .10;  //next 3 lakh 10%
-//            case 1:
-//                newLimit = 300000;
-//                if (income > limit)
-//                    return calculateTax(unCalculateIncome, 300000, 2);
-////                else return income * .05;  //next 1 lakh 5%
-//            default:
-//                if (income > limit)
-//                    return calculateTax(unCalculateIncome, 100000, 1);
-//                else return 0;  //zero tax
-//        }
+    public void setMonthlySalary(boolean monthlySalary) {
+        this.monthlySalary = monthlySalary;
+        calculateTax();
+    }
+
+    public int getTotalPayableIncome() {
+        return totalPayableIncome;
+    }
+
+    public String getTaxCalculation() {
+        return taxCalculation.toString();
+    }
+
+    private void setTaxCalculation(int amount, double taxPercent) {
+        taxCalculation.append("\nAmount:\t").append(amount)
+                .append("\t\t Percent: \t").append(taxPercent)
+                .append("\t\t Tax: \t").append(amount * taxPercent);
+
+        totalTax += amount * taxPercent;
     }
 
     public interface TaxCalculateListener {

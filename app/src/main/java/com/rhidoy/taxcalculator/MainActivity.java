@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
     private TextView conveyanceTotal;
     private TextView totalAmount;
     private TextView eligibleInvestmentAmount;
+    private CheckBox monthlySalary;
+    private EditText salaryMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
         initTextBox();
         initSpinner();
         initEditText();
+
+        monthlySalary = findViewById(R.id.cb_salary_monthly);
+        monthlySalary.setChecked(incomeData.isMonthlySalary());
+        monthlySalary.setOnClickListener(view -> incomeData.setMonthlySalary(monthlySalary.isChecked()));
+
         incomeData.calculateTax();
     }
 
@@ -97,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
 
     private void initEditText() {
         //salary total
-        EditText salaryMonth = findViewById(R.id.salary_month);
+        salaryMonth = findViewById(R.id.salary_month);
         salaryMonth.setText((incomeData.getSalary()) + "");
         salaryMonth.addTextChangedListener(new TextWatcher(0, incomeData, salaryMonth));
 
@@ -139,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
     }
 
     private void setValue() {
+        //update salary edit box for check box change
+        int previousPosition = salaryMonth.getSelectionStart();
+        salaryMonth.setText((incomeData.getSalary()) + "");
+        salaryMonth.setSelection(previousPosition);
         tax.setText("Your payable tax " + incomeData.getPayableTax());
         taxToPay.setText("You have to pay monthly " + (int) incomeData.getHaveToPayTax() / 12);
         salaryTotal.setText(incomeData.getSalaryTotal() + "");
@@ -148,11 +160,15 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
         conveyanceTotal.setText(incomeData.getConveyanceTotal() + "");
         totalAmount.setText(incomeData.getTotalAmount() + "");
         eligibleInvestmentAmount.setText(incomeData.getEligibleInvestment() + "");
+        TextView taxAbleIncome = findViewById(R.id.taxable_total);
+        taxAbleIncome.setText(incomeData.getTotalPayableIncome() + "");
+        TextView taxCalculation = findViewById(R.id.tax_calculation);
+        taxCalculation.setText("Tax calculation:" + incomeData.getTaxCalculation());
     }
 
     @Override
     public void onCalculate(IncomeData data) {
-        if (incomeData.isPercenMatch())
+        if (incomeData.isPercentMatch())
             setValue();
         else Toast.makeText(this, "Please fill percentage with 100", Toast.LENGTH_SHORT).show();
     }

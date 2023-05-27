@@ -86,6 +86,15 @@
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/zone_sp" />
 
+        <CheckBox
+            android:id="@+id/cb_salary_monthly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/salary"
+            app:layout_constraintEnd_toStartOf="@id/salary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/salary" />
+
         <TextView
             android:id="@+id/salary"
             android:layout_width="0dp"
@@ -93,7 +102,7 @@
             android:text="Monthly Salary"
             app:layout_constraintBottom_toBottomOf="@id/salary_month"
             app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cb_salary_monthly"
             app:layout_constraintTop_toTopOf="@id/salary_month" />
 
         <EditText
@@ -315,22 +324,47 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Total Amount"
-            app:layout_constraintBottom_toTopOf="@id/investment"
+            app:layout_constraintTop_toTopOf="@id/total_total"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bonus_total" />
-
+            app:layout_constraintBottom_toBottomOf="@id/total_total" />
 
         <TextView
             android:id="@+id/total_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Total"
+            android:layout_marginTop="10dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/investment"
+            app:layout_constraintBottom_toTopOf="@id/taxable_total"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/bonus_total" />
+
+
+        <TextView
+            android:id="@+id/taxable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Total Taxable Amount"
+            app:layout_constraintTop_toTopOf="@id/taxable_total"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/taxable_total"/>
+
+
+        <TextView
+            android:id="@+id/taxable_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Waiting to calculate"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toTopOf="@id/investment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/total_total" />
+
 
         <TextView
             android:id="@+id/investment"
@@ -342,7 +376,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total"
+            app:layout_constraintTop_toBottomOf="@id/taxable_total"
             app:layout_constraintBottom_toTopOf="@id/eligible"/>
 
         <TextView
@@ -381,10 +415,22 @@
             android:layout_height="wrap_content"
             android:hint="Amount"
             android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/tax"
+            app:layout_constraintBottom_toTopOf="@id/tax_calculation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/invested"
             app:layout_constraintTop_toBottomOf="@id/eligible_amount" />
+
+        <TextView
+            android:id="@+id/tax_calculation"
+            android:text="Tax Calculation"
+            android:layout_width="0dp"
+            android:gravity="start"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tax"
+            app:layout_constraintTop_toBottomOf="@id/invested_amount"/>
+
 
         <TextView
             android:id="@+id/tax"
@@ -394,8 +440,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tax_pay"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintTop_toBottomOf="@id/invested_amount"/>
+            app:layout_constraintTop_toBottomOf="@id/tax_calculation"/>
 
         <TextView
             android:id="@+id/tax_pay"
