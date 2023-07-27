@@ -289,13 +289,13 @@ public class IncomeData {
             totalPayableIncome = getBasicTotal() + payableRent
                     + payableMedical + payableConveyance + bonus + incentive;
 
-            taxFreeMaxIncome = 300000; //general
+            taxFreeMaxIncome = 350000; //general
             if (payerType == 1)
-                taxFreeMaxIncome = 350000; //Female/Senior Citizen
+                taxFreeMaxIncome = taxFreeMaxIncome + 50000; //Female/Senior Citizen
             else if (payerType == 2)
-                taxFreeMaxIncome = 450000; //Disabled
+                taxFreeMaxIncome = taxFreeMaxIncome + 150000; //Disabled
             else if (payerType == 3)
-                taxFreeMaxIncome = 450000; //Gazetted Freedom Fighters
+                taxFreeMaxIncome = taxFreeMaxIncome + 150000; //Gazetted Freedom Fighters
 
             totalTax = 0;
             if (totalPayableIncome > taxFreeMaxIncome) {
