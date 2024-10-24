@@ -1,7 +1,5 @@
 package com.rhidoy.taxcalculator;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,20 +8,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements IncomeData.TaxCalculateListener {
-    private Spinner payerType;
-    private Spinner zone;
     private IncomeData incomeData;
 
     private TextView tax;
     private TextView taxToPay;
     private TextView salaryTotal;
-    private TextView basicTotal;
-    private TextView houseRentTotal;
-    private TextView medicalTotal;
-    private TextView conveyanceTotal;
     private TextView totalAmount;
     private TextView eligibleInvestmentAmount;
     private CheckBox monthlySalary;
@@ -47,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
     }
 
     private void initSpinner() {
-        payerType = findViewById(R.id.payer_category_sp);
-        zone = findViewById(R.id.zone_sp);
+        Spinner payerType = findViewById(R.id.payer_category_sp);
+        Spinner zone = findViewById(R.id.zone_sp);
 
         ArrayAdapter<CharSequence> payerTypeAd = ArrayAdapter
                 .createFromResource(
@@ -95,10 +88,6 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
         tax = findViewById(R.id.tax);
         taxToPay = findViewById(R.id.tax_pay);
         salaryTotal = findViewById(R.id.salary_yearly);
-        basicTotal = findViewById(R.id.basic_total);
-        houseRentTotal = findViewById(R.id.house_total);
-        medicalTotal = findViewById(R.id.medical_total);
-        conveyanceTotal = findViewById(R.id.conveyance_total);
         totalAmount = findViewById(R.id.total_total);
         eligibleInvestmentAmount = findViewById(R.id.eligible_amount);
     }
@@ -108,26 +97,6 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
         salaryMonth = findViewById(R.id.salary_month);
         salaryMonth.setText((incomeData.getSalary()) + "");
         salaryMonth.addTextChangedListener(new TextWatcher(0, incomeData, salaryMonth));
-
-        //basic
-        EditText basicMonth = findViewById(R.id.basic_value);
-        basicMonth.setText(incomeData.getBasicPercent() + "");
-        basicMonth.addTextChangedListener(new TextWatcher(1, incomeData, basicMonth));
-
-        //house
-        EditText houseRent = findViewById(R.id.house_value);
-        houseRent.setText(incomeData.getHouseRentPercent() + "");
-        houseRent.addTextChangedListener(new TextWatcher(2, incomeData, houseRent));
-
-        //medical
-        EditText medical = findViewById(R.id.medical_value);
-        medical.setText(incomeData.getMedicalPercent() + "");
-        medical.addTextChangedListener(new TextWatcher(3, incomeData, medical));
-
-        //conveyance
-        EditText conveyance = findViewById(R.id.conveyance_value);
-        conveyance.setText(incomeData.getConveyancePercent() + "");
-        conveyance.addTextChangedListener(new TextWatcher(4, incomeData, conveyance));
 
         //incentive
         EditText incentive = findViewById(R.id.incentive_total);
@@ -151,25 +120,19 @@ public class MainActivity extends AppCompatActivity implements IncomeData.TaxCal
         int previousPosition = salaryMonth.getSelectionStart();
         salaryMonth.setText((incomeData.getSalary()) + "");
         salaryMonth.setSelection(previousPosition);
-        tax.setText("Your payable tax " + incomeData.getPayableTax());
+        tax.setText(String.format("Your payable tax %.2f ", incomeData.getPayableTax()));
         taxToPay.setText("You have to pay monthly " + (int) incomeData.getHaveToPayTax() / 12);
         salaryTotal.setText(incomeData.getSalaryTotal() + "");
-        basicTotal.setText(incomeData.getBasicTotal() + "");
-        houseRentTotal.setText(incomeData.getHouseRentTotal() + "");
-        medicalTotal.setText(incomeData.getMedicalTotal() + "");
-        conveyanceTotal.setText(incomeData.getConveyanceTotal() + "");
         totalAmount.setText(incomeData.getTotalAmount() + "");
         eligibleInvestmentAmount.setText(incomeData.getEligibleInvestment() + "");
         TextView taxAbleIncome = findViewById(R.id.taxable_total);
-        taxAbleIncome.setText(incomeData.getTotalPayableIncome() + "");
+        taxAbleIncome.setText(incomeData.getTotalTaxableIncome() + "");
         TextView taxCalculation = findViewById(R.id.tax_calculation);
         taxCalculation.setText("Tax calculation:" + incomeData.getTaxCalculation());
     }
 
     @Override
     public void onCalculate(IncomeData data) {
-        if (incomeData.isPercentMatch())
-            setValue();
-        else Toast.makeText(this, "Please fill percentage with 100", Toast.LENGTH_SHORT).show();
+        setValue();
     }
 }

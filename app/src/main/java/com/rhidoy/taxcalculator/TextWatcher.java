@@ -32,7 +32,6 @@ public class TextWatcher implements android.text.TextWatcher {
             return;
 
         int value = Integer.parseInt(editable.toString());
-        int available;
         switch (type) {
             case 0://salary
                 if (value == data.getSalary())
@@ -42,38 +41,6 @@ public class TextWatcher implements android.text.TextWatcher {
                     return;
                 }
                 data.setSalary(value);
-                break;
-            case 1://basic
-                if (value == data.getBasicPercent())
-                    return;
-                available = data.getHouseRentPercent()
-                        + data.getMedicalPercent()
-                        + data.getConveyancePercent();
-                data.setBasic(getEligibleValue(value, available));
-                break;
-            case 2://house rent
-                if (value == data.getHouseRentPercent())
-                    return;
-                available = data.getBasicPercent()
-                        + data.getMedicalPercent()
-                        + data.getConveyancePercent();
-                data.setHouseRent(getEligibleValue(value, available));
-                break;
-            case 3://medical
-                if (value == data.getMedicalPercent())
-                    return;
-                available = data.getBasicPercent()
-                        + data.getHouseRentPercent()
-                        + data.getConveyancePercent();
-                data.setMedical(getEligibleValue(value, available));
-                break;
-            case 4://conveyance
-                if (value == data.getConveyancePercent())
-                    return;
-                available = data.getBasicPercent()
-                        + data.getHouseRentPercent()
-                        + data.getMedicalPercent();
-                data.setConveyance(getEligibleValue(value, available));
                 break;
             case 5://incentive
                 if (value == data.getIncentive())
@@ -91,14 +58,5 @@ public class TextWatcher implements android.text.TextWatcher {
                 data.setInvestedAmount(value);
                 break;
         }
-    }
-
-    private int getEligibleValue(int value, int available) {
-        //calculate the possible value with current one
-        if (available + value > 100) {
-            value = 100 - available;
-            editText.setText(value + "");
-        }
-        return value;
     }
 }

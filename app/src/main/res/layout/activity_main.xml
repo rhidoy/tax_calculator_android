@@ -15,7 +15,7 @@
             android:id="@+id/payer_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose Tax Payer Category"
+            android:text="@string/choose_tax_payer_category"
             app:layout_constraintBottom_toTopOf="@id/payer_category_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:id="@+id/zone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose Tax Zone"
+            android:text="@string/choose_tax_zone"
             app:layout_constraintBottom_toTopOf="@id/zone_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
             android:id="@+id/salary_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Salary Breakdown"
+            android:text="@string/salary_breakdown"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/salary_month"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
@@ -79,7 +79,7 @@
             android:id="@+id/yearly"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Yearly Amount"
+            android:text="@string/yearly_amount"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/salary_month"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +99,7 @@
             android:id="@+id/salary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Monthly Salary"
+            android:text="@string/monthly_salary"
             app:layout_constraintBottom_toBottomOf="@id/salary_month"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toEndOf="@id/cb_salary_monthly"
@@ -109,9 +109,10 @@
             android:id="@+id/salary_month"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Salary"
+            android:autofillHints="number"
+            android:hint="@string/salary"
             android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/basic_value"
+            app:layout_constraintBottom_toTopOf="@id/incentive_value"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toEndOf="@id/salary"
             app:layout_constraintTop_toBottomOf="@id/salary_tv" />
@@ -120,7 +121,7 @@
             android:id="@+id/salary_yearly"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Total Monthly Salary"
+            android:text="@string/total_monthly_salary"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/salary_month"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,138 +129,10 @@
             app:layout_constraintTop_toTopOf="@id/salary_month" />
 
         <TextView
-            android:id="@+id/basic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Basic Percent"
-            app:layout_constraintBottom_toBottomOf="@id/basic_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/basic_value" />
-
-        <EditText
-            android:id="@+id/basic_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Percent"
-            android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/house_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/salary_month" />
-
-        <TextView
-            android:id="@+id/basic_total"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Yearly Basic"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/basic_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/basic_value" />
-
-        <TextView
-            android:id="@+id/house"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="House Rent Percent"
-            app:layout_constraintBottom_toBottomOf="@id/house_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/house_value" />
-
-        <EditText
-            android:id="@+id/house_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Percent"
-            android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/medical_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/basic_value" />
-
-        <TextView
-            android:id="@+id/house_total"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="House Total"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/house_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/house_value" />
-
-        <TextView
-            android:id="@+id/medical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Medical Allowance Percent"
-            app:layout_constraintBottom_toBottomOf="@id/medical_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/medical_value" />
-
-        <EditText
-            android:id="@+id/medical_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Percent"
-            android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/conveyance_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/house_value" />
-
-        <TextView
-            android:id="@+id/medical_total"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Medical Total"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/medical_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/medical_value" />
-
-        <TextView
-            android:id="@+id/conveyance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Conveyance Percent"
-            app:layout_constraintBottom_toBottomOf="@id/conveyance_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/conveyance_value" />
-
-        <EditText
-            android:id="@+id/conveyance_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Percent"
-            android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/incentive_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/medical_value" />
-
-        <TextView
-            android:id="@+id/conveyance_total"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Conveyance Total"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/conveyance_value"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/conveyance_value" />
-
-        <TextView
             android:id="@+id/incentive"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Incentive/OT"
+            android:text="@string/incentive_ot"
             app:layout_constraintBottom_toBottomOf="@id/incentive_total"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -269,7 +142,7 @@
             android:id="@+id/incentive_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Yearly"
+            android:text="@string/yearly"
             app:layout_constraintBottom_toBottomOf="@id/incentive_total"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline"
@@ -279,19 +152,20 @@
             android:id="@+id/incentive_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:autofillHints="number"
+            android:hint="@string/amount"
             android:inputType="number"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/bonus_total"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/conveyance_value" />
+            app:layout_constraintTop_toBottomOf="@id/salary_month" />
 
         <TextView
             android:id="@+id/bonus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Festival Bonus"
+            android:text="@string/festival_bonus"
             app:layout_constraintBottom_toBottomOf="@id/bonus_total"
             app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -301,7 +175,7 @@
             android:id="@+id/bonus_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Yearly"
+            android:text="@string/yearly"
             app:layout_constraintBottom_toBottomOf="@id/bonus_total"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="@id/guideline"
@@ -311,7 +185,8 @@
             android:id="@+id/bonus_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:autofillHints="amount"
+            android:hint="@string/amount"
             android:inputType="number"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/total_total"
@@ -323,7 +198,7 @@
             android:id="@+id/total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Total Amount"
+            android:text="@string/total_amount"
             app:layout_constraintTop_toTopOf="@id/total_total"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
@@ -333,7 +208,7 @@
             android:id="@+id/total_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Total"
+            android:text="@string/total"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/taxable_total"
@@ -346,7 +221,7 @@
             android:id="@+id/taxable"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Total Taxable Amount"
+            android:text="@string/total_taxable_amount"
             app:layout_constraintTop_toTopOf="@id/taxable_total"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
@@ -357,7 +232,7 @@
             android:id="@+id/taxable_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Waiting to calculate"
+            android:text="@string/waiting_to_calculate"
             android:textStyle="bold"
             android:layout_marginTop="15dp"
             app:layout_constraintBottom_toTopOf="@id/investment"
@@ -370,7 +245,7 @@
             android:id="@+id/investment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Investment"
+            android:text="@string/investment"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:textStyle="bold"
@@ -383,7 +258,7 @@
             android:id="@+id/eligible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Eligible Amount"
+            android:text="@string/eligible_amount"
             app:layout_constraintBottom_toBottomOf="@id/eligible_amount"
             app:layout_constraintEnd_toStartOf="@id/eligible_amount"
             app:layout_constraintStart_toStartOf="parent"
@@ -393,7 +268,7 @@
             android:id="@+id/eligible_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Waiting to calculate"
+            android:hint="@string/waiting_to_calculate"
             app:layout_constraintBottom_toTopOf="@id/invested_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/eligible"
@@ -403,7 +278,7 @@
             android:id="@+id/invested"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Invested Amount"
+            android:text="@string/invested_amount"
             app:layout_constraintBottom_toBottomOf="@id/invested_amount"
             app:layout_constraintEnd_toStartOf="@id/invested_amount"
             app:layout_constraintStart_toStartOf="parent"
@@ -413,7 +288,8 @@
             android:id="@+id/invested_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:autofillHints="amount"
+            android:hint="@string/amount"
             android:inputType="number"
             app:layout_constraintBottom_toTopOf="@id/tax_calculation"
             app:layout_constraintEnd_toEndOf="parent"
@@ -422,7 +298,7 @@
 
         <TextView
             android:id="@+id/tax_calculation"
-            android:text="Tax Calculation"
+            android:text="@string/tax_calculation"
             android:layout_width="0dp"
             android:gravity="start"
             android:layout_height="wrap_content"
@@ -434,7 +310,7 @@
 
         <TextView
             android:id="@+id/tax"
-            android:text="Total Tax"
+            android:text="@string/total_tax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -444,7 +320,7 @@
 
         <TextView
             android:id="@+id/tax_pay"
-            android:text="Tax have to pay"
+            android:text="@string/tax_have_to_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"

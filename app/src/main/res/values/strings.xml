@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Tax Calculator</string>
+    <string name="choose_tax_payer_category">Choose Tax Payer Category</string>
+    <string name="choose_tax_zone">Choose Tax Zone</string>
+    <string name="salary_breakdown">Salary Breakdown</string>
+    <string name="yearly_amount">Yearly Amount</string>
+    <string name="monthly_salary">Monthly Salary</string>
+    <string name="salary">Salary</string>
+    <string name="total_monthly_salary">Total Monthly Salary</string>
+    <string name="incentive_ot">Incentive/OT</string>
+    <string name="yearly">Yearly</string>
+    <string name="amount">Amount</string>
+    <string name="festival_bonus">Festival Bonus</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="total">Total</string>
+    <string name="total_taxable_amount">Total Taxable Amount</string>
+    <string name="waiting_to_calculate">Waiting to calculate</string>
+    <string name="investment">Investment</string>
+    <string name="eligible_amount">Eligible Amount</string>
+    <string name="invested_amount">Invested Amount</string>
+    <string name="tax_calculation">Tax Calculation</string>
+    <string name="total_tax">Total Tax</string>
+    <string name="tax_have_to_pay">Tax have to pay</string>
 
     <string-array name="payer_type">
         <item>General</item>
